@@ -1,4 +1,4 @@
-The KnuVerse SDK for Ruby
+The KnuVerse Knufactor SDK for Ruby
 ====================
 
 About
@@ -47,7 +47,7 @@ For a typical custom ruby application, you'll need to do something like the foll
     require 'knuverse/knufactor'
     
     # create an instance of the Client
-    client = KnuVerse::Knufactor::Client.new(apikey: 'someverylongapikey', secret: 'testtest4me')
+    client = KnuVerse::Knufactor::Client.new(apikey: 'someverylongapikey', secret: 'testtest4me' account: 12345678900)
     # pull some data
     client.about_service
     # => {"company"=>"KnuVerse", "version"=>"1.4.0", "multi_tenant"=>true, "service"=>"audiopin", "name"=>"KnuVerse"}
