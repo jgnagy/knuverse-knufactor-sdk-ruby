@@ -10,6 +10,7 @@ require 'will_paginate/array'
 # Internal Requirements
 require 'knuverse/knufactor/version'
 require 'knuverse/knufactor/client_exception'
+require 'knuverse/knufactor/exceptions/client_not_configured'
 require 'knuverse/knufactor/exceptions/invalid_arguments'
 require 'knuverse/knufactor/exceptions/invalid_options'
 require 'knuverse/knufactor/client_helpers'
