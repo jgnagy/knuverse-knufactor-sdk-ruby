@@ -3,21 +3,18 @@ module KnuVerse
     # The API Client class
     class Client
       attr_reader :server, :base_uri, :account
-      attr_accessor :username, :password
+      attr_accessor :apikey, :secret
 
       include ClientValidations
       include ClientHelpers
 
-      def initialize(server, opts = {})
+      def initialize(opts = {})
         # validations
         validate_opts(opts)
-        validate_server(server)
 
         # Set up the client's state
-        @server     = server
-        @username   = opts[:username]
-        @password   = opts[:password]
-        @key_id     = opts[:key_id]
+        @server     = opts[:server] || 'https://cloud.knuverse.com'
+        @apikey     = opts[:apikey]
         @secret     = opts[:secret]
         @account    = opts[:account].to_s
         @base_uri   = opts[:base_uri] || '/api/v1/'
@@ -48,8 +45,8 @@ module KnuVerse
       def refresh_auth_bearer
         auth_data = {
           account_number: @account,
-          user: @username,
-          password: @password
+          user: @apikey,
+          password: @secret
         }
         resp = post('auth', auth_data)
         resp['jwt']
@@ -59,10 +56,6 @@ module KnuVerse
         @auth_token = refresh_auth_bearer
         @last_auth  = Time.now.utc
         true
-      end
-
-      def using_auth?
-        username && password ? true : false
       end
 
       def get(uri, data = nil)
@@ -109,7 +102,7 @@ module KnuVerse
       private
 
       def auth_header
-        "Bearer #{@auth_token}"
+        authenticated? ? "Bearer #{@auth_token}" : nil
       end
 
       def client_action

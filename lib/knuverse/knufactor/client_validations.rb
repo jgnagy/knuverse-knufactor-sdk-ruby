@@ -3,18 +3,7 @@ module KnuVerse
     # Validation methods
     module ClientValidations
       def validate_creds(opts, exception)
-        auth_by_cred = valid_user_creds(opts)
-        auth_by_key  = valid_key_creds(opts)
-        raise(exception, 'Must Auth Using Key or Username') unless auth_by_cred || auth_by_key
-        raise(exception, 'Key and User Auth Are Mutually Exclusive') if auth_by_cred && auth_by_key
-      end
-
-      def valid_user_creds(opts)
-        opts.key?(:username) && opts.key?(:password) ? true : false
-      end
-
-      def valid_key_creds(opts)
-        opts.key?(:key_id) && opts.key?(:secret) ? true : false
+        raise(exception, 'Must Provide Auth') unless opts.key?(:apikey) && opts.key?(:secret)
       end
 
       # Validate the options passed on initialize
@@ -22,6 +11,7 @@ module KnuVerse
         e = Exceptions::InvalidOptions
         raise(e, 'Is not Hash-like') unless opts.respond_to?(:[]) && opts.respond_to?(:key?)
         raise(e, 'Missing account') unless opts.key?(:account)
+        validate_server(opts[:server])
         if opts.key?(:base_uri)
           begin
             URI.parse(opts[:base_uri])
@@ -36,6 +26,7 @@ module KnuVerse
 
       # Validate the server name provided
       def validate_server(name)
+        return true unless name # if no name is provided, just go with the defaults
         valid = name.is_a? String
         begin
           u = URI.parse(name)
@@ -43,7 +34,7 @@ module KnuVerse
         rescue URI::InvalidURIError
           valid = false
         end
-        valid || raise(Exceptions::InvalidArguments, 'Invalid server')
+        valid || raise(Exceptions::InvalidOptions, 'Invalid server')
       end
     end
   end
