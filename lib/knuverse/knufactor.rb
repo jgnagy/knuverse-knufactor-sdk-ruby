@@ -1,4 +1,5 @@
 # Standard Library Requirements
+require 'json'
 
 # External Library Requirements
 require 'faraday'
@@ -8,6 +9,7 @@ require 'knuverse/knufactor/version'
 require 'knuverse/knufactor/client_exception'
 require 'knuverse/knufactor/exceptions/invalid_arguments'
 require 'knuverse/knufactor/exceptions/invalid_options'
+require 'knuverse/knufactor/client_invalidations'
 require 'knuverse/knufactor/client'
 
 module KnuVerse

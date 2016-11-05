@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.post_install_message  = 'Thanks for installing the KnuVerse Knufactor Ruby SDK!'
   spec.platform              = Gem::Platform::RUBY
 
-  spec.add_runtime_dependency 'faraday'
+  spec.add_runtime_dependency 'faraday', '~> 0.9'
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rake', '~> 10.0'
