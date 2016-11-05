@@ -46,10 +46,11 @@ For a typical custom ruby application, you'll need to do something like the foll
 
     require 'knuverse/knufactor'
     
-    # create an 'instance' of the Client
-    client = KnuVerse::Knufactor::Client.instance
-    # authenticate
-    client.connect username: 'username', password: 'password', account: 'account_id'
+    # create an instance of the Client
+    client = KnuVerse::Knufactor::Client.new(apikey: 'someverylongapikey', secret: 'testtest4me')
+    # pull some data
+    client.about_service
+    # => {"company"=>"KnuVerse", "version"=>"1.4.0", "multi_tenant"=>true, "service"=>"audiopin", "name"=>"KnuVerse"}
 
 License
 -------
