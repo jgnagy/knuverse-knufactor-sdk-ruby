@@ -1,5 +1,6 @@
 # Standard Library Requirements
 require 'json'
+require 'singleton'
 
 # External Library Requirements
 require 'rest-client'

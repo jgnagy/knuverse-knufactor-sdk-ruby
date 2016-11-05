@@ -5,10 +5,19 @@ module KnuVerse
       attr_reader :server, :base_uri, :account
       attr_accessor :apikey, :secret
 
+      include Singleton
       include ClientValidations
       include ClientHelpers
 
-      def initialize(opts = {})
+      def self.configure(opts = {})
+        instance.configure(opts)
+      end
+
+      def self.about_service
+        instance.about_service
+      end
+
+      def configure(opts = {})
         # validations
         validate_opts(opts)
 
@@ -20,6 +29,7 @@ module KnuVerse
         @base_uri   = opts[:base_uri] || '/api/v1/'
         @last_auth  = nil
         @auth_token = nil
+        @configured = true
       end
 
       def about_service
@@ -33,7 +43,12 @@ module KnuVerse
       end
 
       def authenticated?
+        raise Exceptions::ClientNotConfigured unless configured?
         @auth_token && @last_auth && ((Time.now.utc - @last_auth) < (60 * 15)) ? true : false
+      end
+
+      def configured?
+        @configured ? true : false
       end
 
       def json_headers
@@ -106,6 +121,7 @@ module KnuVerse
       end
 
       def client_action
+        raise Exceptions::ClientNotConfigured unless configured?
         yield connection
       end
 

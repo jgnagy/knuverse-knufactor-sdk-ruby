@@ -4,11 +4,13 @@ describe KnuVerse::Knufactor::Client do
   let(:knuverse_base_url) { 'https://cloud.knuverse.com/api/v1/' }
   context 'under nominal conditions' do
     subject do
-      KnuVerse::Knufactor::Client.new(
+      configured_client = KnuVerse::Knufactor::Client.instance
+      configured_client.configure(
         apikey: 'test',
         secret: 'test1234',
         account:  12_345_678_900
       )
+      configured_client
     end
 
     describe '#api_uri' do
