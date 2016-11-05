@@ -3,6 +3,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'knuverse/knufactor/version'
 
+# rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |spec|
   spec.name          = 'knuverse-knufactor'
   spec.version       = KnuVerse::Knufactor::VERSION
@@ -27,7 +28,8 @@ Gem::Specification.new do |spec|
   spec.post_install_message  = 'Thanks for installing the KnuVerse Knufactor Ruby SDK!'
   spec.platform              = Gem::Platform::RUBY
 
-  spec.add_runtime_dependency 'faraday', '~> 0.9'
+  spec.add_runtime_dependency 'will_paginate', '~> 3.1'
+  spec.add_runtime_dependency 'rest-client', '~> 2.0'
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rake', '~> 10.0'

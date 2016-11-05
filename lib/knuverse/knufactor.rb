@@ -2,14 +2,17 @@
 require 'json'
 
 # External Library Requirements
-require 'faraday'
+require 'rest-client'
+require 'will_paginate'
+require 'will_paginate/array'
 
 # Internal Requirements
 require 'knuverse/knufactor/version'
 require 'knuverse/knufactor/client_exception'
 require 'knuverse/knufactor/exceptions/invalid_arguments'
 require 'knuverse/knufactor/exceptions/invalid_options'
-require 'knuverse/knufactor/client_invalidations'
+require 'knuverse/knufactor/client_helpers'
+require 'knuverse/knufactor/client_validations'
 require 'knuverse/knufactor/client'
 
 module KnuVerse

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe KnuVerse::Knufactor::Client do
+  let(:knuverse_base_url) { 'https://cloud.dev.knuverse.com/api/v1/' }
   context 'under nominal conditions' do
     subject do
       KnuVerse::Knufactor::Client.new(
@@ -13,7 +14,7 @@ describe KnuVerse::Knufactor::Client do
 
     describe '#api_uri' do
       it 'should provide a full API uri' do
-        expect(subject.api_uri).to eq(URI.parse('https://cloud.dev.knuverse.com/api/v1/'))
+        expect(subject.api_uri).to eq(URI.parse(knuverse_base_url))
       end
     end
 
