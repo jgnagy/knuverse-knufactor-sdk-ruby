@@ -1,18 +1,8 @@
 module KnuVerse
   module Knufactor
-    # The API Client Singleton class
-    class Client < ClientBase
-      include Singleton
-
-      def self.configure(opts = {})
-        instance.configure(opts)
-      end
-
-      def self.about_service
-        instance.about_service
-      end
-
-      def configure(opts = {})
+    # The Simple API Client class
+    class SimpleClient < ClientBase
+      def initialize(opts = {})
         # validations
         validate_opts(opts)
 

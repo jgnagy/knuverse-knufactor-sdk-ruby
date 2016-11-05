@@ -55,6 +55,17 @@ For a typical custom ruby application, you'll need to do something like the foll
     
     # interact with the singleton as a client instance for simplicity
     client = KnuVerse::Knufactor::Client.instance
+    
+    # In complex, multi-user systems, using a singleton class might not work.
+    # For this reason, there is a regular class version of the client that is not tied to the singleton
+    local_client1 = KnuVerse::Knufactor::SimpleClient.new(
+      apikey: 'b1b71d68cffea1d43257fff9deadbeef', secret: 'testtest4m', account: 12345678900
+    )
+    local_client2 = KnuVerse::Knufactor::SimpleClient.new(
+      apikey: 'b1b71d68cffea1d43257fff9deadf00d', secret: 'testtest4m', account: 12345678900
+    )
+    local_client1 == local_client2
+    # => false
 
 License
 -------

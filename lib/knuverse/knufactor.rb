@@ -15,7 +15,9 @@ require 'knuverse/knufactor/exceptions/invalid_arguments'
 require 'knuverse/knufactor/exceptions/invalid_options'
 require 'knuverse/knufactor/client_helpers'
 require 'knuverse/knufactor/client_validations'
+require 'knuverse/knufactor/client_base'
 require 'knuverse/knufactor/client'
+require 'knuverse/knufactor/simple_client'
 
 module KnuVerse
   # The SDK for interacting with the KnuVerse Knufactor Cloud API
