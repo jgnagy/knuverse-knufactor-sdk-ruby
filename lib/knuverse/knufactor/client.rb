@@ -2,8 +2,8 @@ module KnuVerse
   module Knufactor
     # The API Client class
     class Client
-      attr_reader :server, :base_uri, :account
-      attr_accessor :apikey, :secret
+      attr_reader :server, :base_uri
+      attr_accessor :apikey, :secret, :account
 
       include Singleton
       include ClientValidations
@@ -25,7 +25,7 @@ module KnuVerse
         @server     = opts[:server] || 'https://cloud.knuverse.com'
         @apikey     = opts[:apikey]
         @secret     = opts[:secret]
-        @account    = opts[:account].to_s
+        @account    = opts[:account]
         @base_uri   = opts[:base_uri] || '/api/v1/'
         @last_auth  = nil
         @auth_token = nil
@@ -59,7 +59,7 @@ module KnuVerse
 
       def refresh_auth_bearer
         auth_data = {
-          account_number: @account,
+          account_number: @account.to_s,
           user: @apikey,
           password: @secret
         }
