@@ -1,7 +1,7 @@
 module KnuVerse
   module Knufactor
     # Simple helper methods for the API Client
-    module ClientHelpers
+    module APIClientHelpers
       def json_escape(s)
         json_escape = {
           '&' => '\u0026',

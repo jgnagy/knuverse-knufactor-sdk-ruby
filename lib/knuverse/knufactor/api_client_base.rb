@@ -1,12 +1,12 @@
 module KnuVerse
   module Knufactor
     # The API Client Base class
-    class ClientBase
+    class APIClientBase
       attr_reader :server, :base_uri
       attr_accessor :apikey, :secret, :account
 
-      include ClientValidations
-      include ClientHelpers
+      include APIClientValidations
+      include APIClientHelpers
 
       def about_service
         get 'about'
@@ -19,8 +19,8 @@ module KnuVerse
       end
 
       def authenticated?
-        raise Exceptions::ClientNotConfigured unless configured?
-        @auth_token && @last_auth && ((Time.now.utc - @last_auth) < (60 * 15)) ? true : false
+        raise Exceptions::APIClientNotConfigured unless configured?
+        @auth_token && @last_auth && ((Time.now.utc - @last_auth) < (60 * 14)) ? true : false
       end
 
       def configured?
@@ -35,9 +35,8 @@ module KnuVerse
 
       def refresh_auth_bearer
         auth_data = {
-          account_number: @account.to_s,
-          user: @apikey,
-          password: @secret
+          key_id: @apikey,
+          secret: @secret
         }
         resp = post('auth', auth_data)
         resp['jwt']
@@ -47,6 +46,11 @@ module KnuVerse
         @auth_token = refresh_auth_bearer
         @last_auth  = Time.now.utc
         true
+      end
+
+      def refresh_token_expiration
+        get('auth/refresh')
+        @last_auth = Time.now.utc
       end
 
       def get(uri, data = nil)
@@ -61,11 +65,15 @@ module KnuVerse
         end
       end
 
-      def post(uri, data)
+      def post(uri, data = nil)
         refresh_auth unless authenticated? || uri == 'auth'
 
         client_action do |client|
-          JSON.parse client[uri].post(json_escape(data.to_json), json_headers)
+          if data
+            JSON.parse client[uri].post(json_escape(data.to_json), json_headers)
+          else
+            JSON.parse client[uri].post(nil, json_headers)
+          end
         end
       end
 
@@ -97,7 +105,7 @@ module KnuVerse
       end
 
       def client_action
-        raise Exceptions::ClientNotConfigured unless configured?
+        raise Exceptions::APIClientNotConfigured unless configured?
         yield connection
       end
 

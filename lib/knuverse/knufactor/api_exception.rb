@@ -1,7 +1,7 @@
 module KnuVerse
   module Knufactor
     # Generic Exception definition
-    class ClientException < StandardError
+    class APIException < StandardError
     end
   end
 end

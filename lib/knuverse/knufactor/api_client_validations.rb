@@ -1,7 +1,7 @@
 module KnuVerse
   module Knufactor
     # Validation methods
-    module ClientValidations
+    module APIClientValidations
       def validate_creds(opts, exception)
         raise(exception, 'Must Provide Auth') unless opts.key?(:apikey) && opts.key?(:secret)
       end
@@ -10,7 +10,6 @@ module KnuVerse
       def validate_opts(opts)
         e = Exceptions::InvalidOptions
         raise(e, 'Is not Hash-like') unless opts.respond_to?(:[]) && opts.respond_to?(:key?)
-        raise(e, 'Missing account') unless opts.key?(:account)
         validate_server(opts[:server])
         if opts.key?(:base_uri)
           begin

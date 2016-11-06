@@ -46,23 +46,26 @@ For a typical custom ruby application, you'll need to do something like the foll
 
     require 'knuverse/knufactor'
     
-    # configure the client singleton
-    KnuVerse::Knufactor::Client.configure(apikey: 'b1b71d68cffea1d43257fff9deadbeef', secret: 'testtest4m', account: 12345678900)
+    # configure the API client singleton
+    KnuVerse::Knufactor::APIClient.configure(
+      apikey: 'b1b71d68cffea1d43257fff9deadbeef',
+      secret: '34d04e5f05a194444e9c26358a94eaf2'
+    )
     
     # pull some data
-    KnuVerse::Knufactor::Client.about_service
+    KnuVerse::Knufactor::APIClient.about_service
     # => {"company"=>"KnuVerse", "version"=>"1.4.0", "multi_tenant"=>true, "service"=>"audiopin", "name"=>"KnuVerse"}
     
     # interact with the singleton as a client instance for simplicity
-    client = KnuVerse::Knufactor::Client.instance
+    client = KnuVerse::Knufactor::APIClient.instance
     
     # In complex, multi-user systems, using a singleton class might not work.
-    # For this reason, there is a regular class version of the client that is not tied to the singleton
-    local_client1 = KnuVerse::Knufactor::SimpleClient.new(
-      apikey: 'b1b71d68cffea1d43257fff9deadbeef', secret: 'testtest4m', account: 12345678900
+    # For this reason, there is a regular class version of the API client that is not tied to the singleton
+    local_client1 = KnuVerse::Knufactor::SimpleAPIClient.new(
+      apikey: 'b1b71d68cffea1d43257fff9deadbeef', secret: '57838344acf7f5876226ede247c5881a'
     )
-    local_client2 = KnuVerse::Knufactor::SimpleClient.new(
-      apikey: 'b1b71d68cffea1d43257fff9deadf00d', secret: 'testtest4m', account: 12345678900
+    local_client2 = KnuVerse::Knufactor::SimpleAPIClient.new(
+      apikey: '33371d68cffea1d43257fff9deadf00d', secret: 'e7d1c88825dc96a05bc38c39cca4a1ca'
     )
     local_client1 == local_client2
     # => false

@@ -1,8 +1,18 @@
 module KnuVerse
   module Knufactor
-    # The Simple API Client class
-    class SimpleClient < ClientBase
-      def initialize(opts = {})
+    # The API Client Singleton class
+    class APIClient < APIClientBase
+      include Singleton
+
+      def self.configure(opts = {})
+        instance.configure(opts)
+      end
+
+      def self.about_service
+        instance.about_service
+      end
+
+      def configure(opts = {})
         # validations
         validate_opts(opts)
 
@@ -10,7 +20,6 @@ module KnuVerse
         @server     = opts[:server] || 'https://cloud.knuverse.com'
         @apikey     = opts[:apikey]
         @secret     = opts[:secret]
-        @account    = opts[:account]
         @base_uri   = opts[:base_uri] || '/api/v1/'
         @last_auth  = nil
         @auth_token = nil
