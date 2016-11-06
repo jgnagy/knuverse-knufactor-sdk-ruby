@@ -1,7 +1,7 @@
 module KnuVerse
   module Knufactor
     module Validations
-      # Validation methods
+      # APIClient validation methods
       module APIClient
         def validate_creds(opts, exception)
           raise(exception, 'Must Provide Auth') unless opts.key?(:apikey) && opts.key?(:secret)

@@ -29,8 +29,7 @@ module KnuVerse
 
       def json_headers
         base = { content_type: :json, accept: :json }
-        base.merge(authorization: auth_header) if authenticated?
-        base
+        authenticated? ? base.merge(authorization: auth_header) : base
       end
 
       def refresh_auth_bearer

@@ -28,8 +28,9 @@ Gem::Specification.new do |spec|
   spec.post_install_message  = 'Thanks for installing the KnuVerse Knufactor Ruby SDK!'
   spec.platform              = Gem::Platform::RUBY
 
-  spec.add_runtime_dependency 'will_paginate', '~> 3.1'
+  spec.add_runtime_dependency 'linguistics', '~> 2.1'
   spec.add_runtime_dependency 'rest-client', '~> 2.0'
+  spec.add_runtime_dependency 'will_paginate', '~> 3.1'
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rake', '~> 10.0'
