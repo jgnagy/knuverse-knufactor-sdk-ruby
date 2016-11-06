@@ -5,8 +5,8 @@ module KnuVerse
       attr_reader :server, :base_uri
       attr_accessor :apikey, :secret, :account
 
-      include APIClientValidations
-      include APIClientHelpers
+      include Validations::APIClient
+      include Helpers::APIClient
 
       def about_service
         get 'about'
@@ -46,11 +46,6 @@ module KnuVerse
         @auth_token = refresh_auth_bearer
         @last_auth  = Time.now.utc
         true
-      end
-
-      def refresh_token_expiration
-        get('auth/refresh')
-        @last_auth = Time.now.utc
       end
 
       def get(uri, data = nil)
