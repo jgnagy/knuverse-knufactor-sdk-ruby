@@ -80,15 +80,12 @@ client.save
 
 # Verify the change worked
 client.reload
-client.bypass_enabled?
-# => true
+client.bypass_limit
+# => 10
 
 # Find some specific clients... all locked out clients
 locked_clients = Client.where(:password_lock?, true)
 # => #<KnuVerse::Knufactor::ResourceCollection:...
-
-# Find clients with bypass enabled
-bypassing_clients = Client.where(:bypass_enabled?, true)
 
 # Find clients that are either enrolled or installed
 happy_clients = Client.where(:state, 'enrolled').or(:state, 'installed')
@@ -101,23 +98,23 @@ For some more complex situations, you may want a specialized API Client (interac
 
 ```ruby
 # interact with the singleton as a client instance for simplicity
-client = KnuVerse::Knufactor::APIClient.instance
+api_client = KnuVerse::Knufactor::APIClient.instance
 
 # In complex, multi-user systems, using a singleton class might not work.
 # For this reason, there is a regular class version of the API client that is not tied to the singleton
-local_client1 = KnuVerse::Knufactor::SimpleAPIClient.new(
+local_api_client1 = KnuVerse::Knufactor::SimpleAPIClient.new(
   apikey: 'b1b71d68cffea1d43257fff9deadbeef', secret: '57838344acf7f5876226ede247c5881a'
 )
-local_client2 = KnuVerse::Knufactor::SimpleAPIClient.new(
+local_api_client2 = KnuVerse::Knufactor::SimpleAPIClient.new(
   apikey: '33371d68cffea1d43257fff9deadf00d', secret: 'e7d1c88825dc96a05bc38c39cca4a1ca'
 )
-local_client1 == local_client2
+local_api_client1 == local_api_client2
 # => false
 
 # Perform an operation with a specific instance of the API Client
-Client.all(api_client: local_client1)
+Client.all(api_client: local_api_client1)
 # All finder methods work this way, allowing the 'api_client' option to be passed
-Client.where(:name, 'bobby', api_client: local_client2)
+Client.where(:name, 'bobby', api_client: local_api_client2)
 
 ```
 

@@ -10,10 +10,9 @@ require 'will_paginate'
 require 'will_paginate/array'
 
 # Internal Requirements
-## Monkey Patches
 require 'core_extensions/string/transformations'
 String.include CoreExtensions::String::Transformations
-## Gem Code
+
 require 'knuverse/knufactor/version'
 require 'knuverse/knufactor/api_exception'
 require 'knuverse/knufactor/exceptions/api_client_not_configured'

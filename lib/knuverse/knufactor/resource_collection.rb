@@ -61,7 +61,6 @@ module KnuVerse
       #
       # @param attribute [Symbol] the attribute to query
       # @param value [Object] the value to compare against
-      # @param comparison_method [String,Symbol] the method to use for comparison
       #   - allowed options are "'==', '!=', '>', '>=', '<', '<=', and 'match'"
       # @raise [Exceptions::InvalidWhereQuery] if not the right kind of comparison
       # @return [ResourceCollection]
@@ -100,7 +99,6 @@ module KnuVerse
       #
       # @param attribute [Symbol] the attribute to query
       # @param value [Object] the value to compare against
-      # @param comparison_method [String,Symbol] the method to use for comparison
       #   - allowed options are "'==', '!=', '>', '>=', '<', '<=', and 'match'"
       # @raise [Exceptions::InvalidWhereQuery] if not the right kind of comparison
       # @return [ResourceCollection]
