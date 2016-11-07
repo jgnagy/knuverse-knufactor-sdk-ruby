@@ -97,7 +97,7 @@ happy_clients = Client.where(:state, 'enrolled').or(:state, 'installed')
 z_clients = Client.where(:name, /^z/i)
 ```
 
-For some more complext situations, you may want to specialize the API Client (interact with it as an instance, or have a thread-local or context-specific client):
+For some more complex situations, you may want a specialized API Client (interact with it as an instance, or have a thread-local or context-specific client):
 
 ```ruby
 # interact with the singleton as a client instance for simplicity
