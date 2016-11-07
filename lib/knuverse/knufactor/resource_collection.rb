@@ -6,7 +6,7 @@ module KnuVerse
       include Enumerable
       include Comparable
 
-      # @return [Class] this is a collection of this {Resource} subclass
+      # @return [Class] a collection of this {Resource} subclass
       attr_reader :type
 
       def initialize(list, options = {})
@@ -28,6 +28,9 @@ module KnuVerse
         @list.empty?
       end
 
+      # Provide the first (or first `n`) entries
+      # @param n [Fixnum] How many to provide
+      # @return [ResourceCollection,Resource]
       def first(n = nil)
         if n
           self.class.new(@list.first(n), type: @type, api_client: @api_client)
@@ -36,6 +39,9 @@ module KnuVerse
         end
       end
 
+      # Provide the last (or last `n`) entries
+      # @param n [Fixnum] How many to provide
+      # @return [ResourceCollection,Resource]
       def last(n = nil)
         if n
           self.class.new(@list.last(n), type: @type, api_client: @api_client)
@@ -45,13 +51,14 @@ module KnuVerse
       end
 
       # Merge two collections
+      # @param other [ResourceCollection]
       # @return [ResourceCollection]
       def merge(other)
         raise Exceptions::InvalidArguments unless other.is_a?(self.class)
         self + (other - self)
       end
 
-      # Makes #model compatible with the server-side
+      # An alias for {#type}
       def model
         type
       end

@@ -3,6 +3,8 @@ module KnuVerse
     module Helpers
       # Simple helper methods for the API Client
       module APIClient
+        # Substitute characters with their JSON-supported versions
+        # @return [String]
         def json_escape(s)
           json_escape = {
             '&' => '\u0026',
@@ -17,10 +19,14 @@ module KnuVerse
           s.to_s.gsub(json_escape_regex, json_escape)
         end
 
+        # Provides access to the "raw" underlying rest-client
+        # @return [RestClient::Resource]
         def raw
           connection
         end
 
+        # The API Client version (uses Semantic Versioning)
+        # @return [String]
         def version
           VERSION
         end

@@ -20,7 +20,9 @@ module KnuVerse
       end
 
       # Define a property for a model
-      # TODO: add more validations on options and names
+      # @!macro [attach] property
+      #   The $1 property
+      # @todo add more validations on options and names
       def self.property(name, options = {})
         @properties ||= {}
 
@@ -30,7 +32,7 @@ module KnuVerse
           :'[]'
         ]
 
-        raise(Exception::InvalidProperty) if invalid_prop_names.include?(name.to_sym)
+        raise(Exceptions::InvalidProperty) if invalid_prop_names.include?(name.to_sym)
         @properties[name.to_sym] = options
       end
 
@@ -40,12 +42,14 @@ module KnuVerse
       end
 
       # Create or set a class-level location to store URI paths for methods
+      # @return [Hash{Symbol => String}]
       def self.paths
         @paths ||= {}
       end
 
       def self.path_for(kind)
-        paths[kind.to_sym]
+        guess = kind.to_sym == :all ? route_key : "#{route_key}/#{kind}"
+        paths[kind.to_sym] || guess
       end
 
       def self.gen_getter_method(name, opts)

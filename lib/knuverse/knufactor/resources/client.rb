@@ -2,10 +2,12 @@ module KnuVerse
   module Knufactor
     module Resources
       # The Knufactor Client resource
-      # rubocop:disable Style/ExtraSpacing
+      #   rubocop:disable Style/ExtraSpacing
       class Client < Resource
         property :bypass_expiration
         property :bypass_limit
+        # @return [Boolean]
+        # @!method bypass_require_code?
         property :bypass_require_code,    type: :boolean, read_only: true
         property :bypass_require_pin,     type: :boolean
         property :bypass_spacing_minutes
@@ -36,8 +38,6 @@ module KnuVerse
         property :verification_lock,      type: :boolean
         property :verification_speed
         property :verification_speed_floor,               read_only: true
-
-        path :all, 'clients'
       end
     end
   end
