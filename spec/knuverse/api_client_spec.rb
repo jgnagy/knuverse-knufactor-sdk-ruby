@@ -2,6 +2,17 @@ require 'spec_helper'
 
 describe KnuVerse::Knufactor::APIClient do
   let(:knuverse_base_url) { 'https://cloud.knuverse.com/api/v1/' }
+  context 'without a configuration' do
+    subject { KnuVerse::Knufactor::APIClient.instance }
+
+    describe '#authenticated?' do
+      it 'should raise an exception' do
+        error_class = KnuVerse::Knufactor::Exceptions::APIClientNotConfigured
+        expect { subject.authenticated? }.to raise_error(error_class)
+      end
+    end
+  end
+
   context 'under nominal conditions' do
     subject do
       configured_client = KnuVerse::Knufactor::APIClient.instance

@@ -20,13 +20,22 @@ module KnuVerse
         property :has_verified, type: :boolean, read_only: true
         property :help_tip, read_only: true
         property :is_disabled, type: :boolean
-        property :is_gauth, type: :boolean
+        property :is_gauth, type: :boolean, read_only: true
         property :is_tenant_client, type: :boolean, read_only: true
         property :last_verification_date, type: :time, read_only: true
-        property :name
+        property :name, read_only: true
         property :notification, read_only: true
+        property :password, write_only: true
         property :password_lock, type: :boolean
+        property :phone_number_last, read_only: true
+        property :pin_rev, read_only: true
+        property :role
+        property :role_rationale
+        property :row_doubling
         property :state, read_only: true
+        property :verification_lock, type: :boolean
+        property :verification_speed
+        property :verification_speed_floor, read_only: true
 
         path :all, 'clients'
       end

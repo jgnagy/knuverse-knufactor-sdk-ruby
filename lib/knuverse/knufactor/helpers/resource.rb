@@ -51,6 +51,10 @@ module KnuVerse
           !new?
         end
 
+        def properties
+          self.class.properties
+        end
+
         def tainted?
           @tainted ? true : false
         end
@@ -89,6 +93,18 @@ module KnuVerse
             send(setter_key, value)
           end
           save
+        end
+
+        def <=>(other)
+          if id < other.id
+            -1
+          elsif id > other.id
+            1
+          elsif id == other.id
+            0
+          else
+            raise Exceptions::InvalidArguments
+          end
         end
       end
     end

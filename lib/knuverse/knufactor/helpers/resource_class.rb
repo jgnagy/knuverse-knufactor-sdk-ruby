@@ -4,27 +4,36 @@ module KnuVerse
       # Simple helper class methods for Resource
       module ResourceClass
         # ActiveRecord ActiveModel::Name compatibility method
-        def self.human
+        def human
           i18n_key.humanize
         end
 
+        # Check if a resource class is immutable
+        def immutable?
+          @immutable ||= false
+        end
+
         # ActiveRecord ActiveModel::Name compatibility method
-        def self.i18n_key
+        def i18n_key
           name.split('::').last.to_underscore
         end
 
         # ActiveRecord ActiveModel::Name compatibility method
-        def self.param_key
+        def param_key
           singular_route_key.to_sym
         end
 
+        def properties
+          @properties ||= {}
+        end
+
         # ActiveRecord ActiveModel::Name compatibility method
-        def self.route_key
+        def route_key
           singular_route_key.en.plural
         end
 
         # ActiveRecord ActiveModel::Name compatibility method
-        def self.singular_route_key
+        def singular_route_key
           i18n_key
         end
       end
