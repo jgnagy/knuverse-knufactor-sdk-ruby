@@ -11,6 +11,13 @@ describe KnuVerse::Knufactor::APIClient do
         expect { subject.authenticated? }.to raise_error(error_class)
       end
     end
+
+    describe '#refresh_auth_bearer' do
+      it 'should raise an exception' do
+        error_class = KnuVerse::Knufactor::Exceptions::APIClientNotConfigured
+        expect { subject.refresh_auth_bearer }.to raise_error(error_class)
+      end
+    end
   end
 
   context 'under nominal conditions' do
