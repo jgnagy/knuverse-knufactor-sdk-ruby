@@ -3,7 +3,9 @@ module KnuVerse
     module Helpers
       # Simple helper class methods for Resource
       module ResourceClass
-        # ActiveRecord ActiveModel::Name compatibility method
+        # Produce a more human-readable representation of {#i18n_key}
+        # @note ActiveRecord ActiveModel::Name compatibility method
+        # @return [String]
         def human
           i18n_key.humanize
         end
@@ -13,28 +15,33 @@ module KnuVerse
           @immutable ||= false
         end
 
-        # ActiveRecord ActiveModel::Name compatibility method
+        # A mock internationalization key based on the class name
+        # @note ActiveRecord ActiveModel::Name compatibility method
+        # @return [String]
         def i18n_key
           name.split('::').last.to_underscore
         end
 
-        # ActiveRecord ActiveModel::Name compatibility method
+        alias singular_route_key i18n_key
+
+        # A symbolized version of {#i18n_key}
+        # @note ActiveRecord ActiveModel::Name compatibility method
+        # @return [Symbol]
         def param_key
-          singular_route_key.to_sym
+          i18n_key.to_sym
         end
 
+        # All the properties defined for this Resource class
+        # @return [Hash{Symbol => Hash}]
         def properties
           @properties ||= {}
         end
 
-        # ActiveRecord ActiveModel::Name compatibility method
+        # A route key for building URLs
+        # @note ActiveRecord ActiveModel::Name compatibility method
+        # @return [String]
         def route_key
-          singular_route_key.en.plural
-        end
-
-        # ActiveRecord ActiveModel::Name compatibility method
-        def singular_route_key
-          i18n_key
+          i18n_key.en.plural
         end
       end
     end
