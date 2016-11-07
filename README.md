@@ -69,6 +69,42 @@ For a typical custom ruby application, you'll need to do something like the foll
     )
     local_client1 == local_client2
     # => false
+    
+    # Make working with resources easier
+    include KnuVerse::Knufactor::Resources
+    
+    # Find some clients
+    clients = Client.all
+    
+    # Take a look at the last client
+    client = clients.last
+    client.name
+    # => "user75"
+    
+    # Make a change
+    client.bypass_limit = 10
+    
+    # Now persist it
+    client.save
+    
+    # Verify the change worked
+    client.reload
+    client.bypass_enabled?
+    # => true
+    
+    # Find some specific clients... all locked out clients
+    locked_clients = Client.where(:password_lock?, true)
+    # => #<KnuVerse::Knufactor::ResourceCollection:...
+    
+    # Find clients with bypass enabled
+    bypassing_clients = Client.where(:bypass_enabled?, true)
+    
+    # Find clients that are either enrolled _or_installed
+    happy_clients = Client.where(:state, 'enrolled').or(:state, 'installed')
+    
+    # Find clients with a name that starts with "z"
+    z_clients = Client.where(:name, /^z/i)
+
 
 License
 -------
