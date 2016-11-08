@@ -1,7 +1,14 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.1.10
-  - 2.2.5
-  - 2.3.1
+- 2.1.10
+- 2.2.5
+- 2.3.1
 cache: bundler
+deploy:
+  provider: rubygems
+  api_key:
+    secure: A9iVmtSsR9iJsjGMXfKHNVuZn13QVdnnRAmAwXQvCSXmDaZQyHLejYnAGQ3WjZc2XbLxSn/787MUTJC2yxG9pJy+Nnyr6L9ZtoBD3F5/q+iqklJXIXtuVV/wOcknG+m71kEIIntZv+g2hVjHo/CfAbm10ycqlJDw/MMoPGxkwXHkj9qGEft6jXygzGEDGxnmqyBRAHZ/BI0vjojdTLM8yO/0RFF1X2cs55YRGyicmE8V/ZYwL5cOVfwCqYNtVp4Pce4GxWfX+Dp1PceI4jnX9hq/kMa+0mTkLWPdMQLYVjyIaZ7eso8RQb9yVPdIGZKp2vQqN1t+s/EHgmiriv/tHluvLnIWjHIwYFuX0Bd9wttp7Sb1K7HhqP0T/Ymny41KLr4Nnx3PqIcm9dz57x6zvq1bIykVlG3sZNthVPKAwbX6lj6X/HCyYaDr65EwFPDWsOxt78zJdbZuV0pdg4rEJaF8MHKy3lOfwm52AfIC4iMsnshhSylDETjwG7P556ZHzutODB3JPSKwmJriGihVBiG5V5TpdrPD9oZPs6rg8XWZs9bdhroIk9FcfE5MZJ0UDUdcV3dpcdJI109G3SR2rxSHaozfeaggsBa4QMD9gPP+Tx2DiD4eOntxo3zhoylISeKIJptLEOqz+vPEWcj/J25+iXbotvlFB1khibVWn0c=
+  gem: knuverse-knufactor
+  on:
+    tags: true
