@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['jgnagy@knuedge.com']
 
   spec.summary       = 'KnuVerse Knufactor Ruby SDK'
-  spec.homepage      = 'https://github.com/knuedge/knuverse-knufactor-sdk-ruby'
+  spec.homepage      = 'https://github.com/KnuVerse/knuverse-knufactor-sdk-ruby'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.35'
   spec.add_development_dependency 'yard',    '~> 0.8'
   spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'travis', '~> 1.8'
 end
