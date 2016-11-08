@@ -6,6 +6,7 @@ About
 This project is a Ruby SDK that allows developers to create apps that use Knuverse's Knufactor Cloud APIs.
 
 Documentation for the API can be found [here](https://cloud.knuverse.com/docs/)
+
 Full documentation for this SDK can be found [here](http://www.rubydoc.info/gems/knuverse-knufactor/)
 
 Note that this SDK isn't a direct port of the [Python SDK](https://github.com/KnuVerse/knuverse-sdk-python), though it is based heavily on the work done there. This SDK uses a Object-Oriented pattern, which is likely more familiar to Ruby developers than a collection of functions may be.
