@@ -37,6 +37,8 @@ module KnuVerse
       end
 
       # Set the URI path for a resource method
+      # @param kind [Symbol] how to refer to the URI
+      # @param uri [String] an API URI to refer to later
       def self.path(kind, uri)
         paths[kind.to_sym] = uri
       end
@@ -53,29 +55,35 @@ module KnuVerse
       end
 
       def self.gen_getter_method(name, opts)
-        method_name = opts[:type] == :boolean ? "#{name}?" : name
-        define_method(method_name.to_sym) do
-          name_as_string = name.to_s
-          reload if @lazy && !@entity.key?(name_as_string)
+        determine_getter_names(name, opts).each do |method_name|
+          define_method(method_name) do
+            name_as_string = name.to_s
+            reload if @lazy && !@entity.key?(name_as_string)
 
-          case opts[:type]
-          when :time
-            if @entity[name_as_string] && !@entity[name_as_string].to_s.empty?
-              Time.parse(@entity[name_as_string].to_s).utc
+            # Casting values based on type
+            case opts[:type]
+            when :time
+              if @entity[name_as_string] && !@entity[name_as_string].to_s.empty?
+                Time.parse(@entity[name_as_string].to_s).utc
+              end
+            else
+              @entity[name_as_string]
             end
-          else
-            @entity[name_as_string]
           end
         end
       end
 
       def self.gen_setter_method(name, opts)
-        define_method("#{name}=".to_sym) do |value|
-          raise Exceptions::ImmutableModification if immutable?
-          # TODO: allow specifying a list of allowed values and validating against it
-          @entity[name.to_s] = opts[:type] == :time ? Time.parse(value.to_s).utc : value
-          @tainted = true
-          @modified_properties << name.to_sym
+        determine_setter_names(name, opts).each do |method_name|
+          define_method(method_name) do |value|
+            raise Exceptions::ImmutableModification if immutable?
+            if opts[:validate]
+              raise Exceptions::InvalidArguments unless send("validate_#{name}".to_sym, value)
+            end
+            @entity[name.to_s] = opts[:type] == :time ? Time.parse(value.to_s).utc : value
+            @tainted = true
+            @modified_properties << name.to_sym
+          end
         end
       end
 
