@@ -20,7 +20,7 @@ module KnuVerse
 
       def authenticated?
         raise Exceptions::APIClientNotConfigured unless configured?
-        @auth_token && @last_auth && ((Time.now.utc - @last_auth) < (60 * 14)) ? true : false
+        @auth_token && @last_auth && ((Time.now.utc - @last_auth) < 60) ? true : false
       end
 
       def configured?

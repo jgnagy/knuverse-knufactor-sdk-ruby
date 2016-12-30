@@ -17,7 +17,8 @@ module KnuVerse
         property :email_verified,         type: :boolean, read_only: true
         property :enroll_date,            type: :time,    read_only: true
         property :enroll_deadline_date,   type: :time
-        property :enroll_deadline_remaining_minutes
+        property :enroll_deadline_remaining_minutes,      read_only: true
+        property :enroll_deadline_extension_minutes,      write_only: true, as: :extent_enrollment
         property :has_password,           type: :boolean, read_only: true
         property :has_pin,                type: :boolean, read_only: true
         property :has_verified,           type: :boolean, read_only: true,  as: :verified
@@ -29,7 +30,7 @@ module KnuVerse
         property :name,                                   read_only: true
         property :notification,                           read_only: true
         property :password,                               write_only: true
-        property :password_lock,          type: :boolean,                   as: :password_locked, validate: true
+        property :password_lock,          type: :boolean,                   as: :password_locked,     validate: true
         property :phone_number_last,                      read_only: true
         property :pin_rev,                                read_only: true
         property :role
@@ -37,8 +38,31 @@ module KnuVerse
         property :row_doubling
         property :state,                                  read_only: true
         property :verification_lock,      type: :boolean,                   as: :verification_locked, validate: true
-        property :verification_speed
+        property :verification_speed                                                                  validate: true
         property :verification_speed_floor,               read_only: true
+
+        def unenroll
+          destroy
+        end
+
+        # https://knuverse-sdk-python.readthedocs.io/en/latest/?#knuverse.knufactor.Knufactor.enrollment_start
+        def start_enrollment(pin, phone_number, mode = 'audiopin')
+          # TODO: check for existing, in-flight enrollments
+          # TODO: move to Enrollment class
+          @api_client.post(
+            'enrollments',
+            {
+              client: name,
+              mode: mode,
+              pin: pin,
+              phone_number: phone_number
+            }
+          )
+        end
+
+        def events
+          @api_client.get("events/clients/#{id}")
+        end
 
         private
 
@@ -47,9 +71,14 @@ module KnuVerse
           value == false # only `false` is valid
         end
 
-        # Used to validate {#password_lock} on set
+        # Used to validate {#verification_lock} on set
         def validate_verification_lock(value)
           value == false # only `false` is valid
+        end
+
+        # Used to validate {#verification_speed} on set
+        def validate_verification_speed(value)
+          [0, 25, 50, 75, 100].include? value
         end
       end
     end
