@@ -3,7 +3,7 @@ module KnuVerse
     # The API Client Base class
     class APIClientBase
       attr_reader :server, :base_uri
-      attr_accessor :apikey, :secret, :account
+      attr_accessor :apikey, :secret, :email, :password
 
       include Validations::APIClient
       include Helpers::APIClient
@@ -33,10 +33,20 @@ module KnuVerse
       end
 
       def refresh_auth_bearer
-        auth_data = {
-          key_id: @apikey,
-          secret: @secret
-        }
+        auth_data = if @apikey && @secret
+                      {
+                        key_id: @apikey,
+                        secret: @secret
+                      }
+                    elsif @email && @password
+                      {
+                        user: @email,
+                        password: @password
+                      }
+                    else
+                      {}
+                    end
+
         resp = post('auth', auth_data)
         resp['jwt']
       end
@@ -89,6 +99,18 @@ module KnuVerse
 
         client_action do |client|
           client[uri].put(json_escape(data.to_json), json_headers)
+        end
+      end
+
+      def delete(uri, data = nil)
+        refresh_auth unless authenticated?
+
+        client_action do |client|
+          if data
+            JSON.parse client[uri].delete(json_headers.merge(params: data))
+          else
+            JSON.parse client[uri].delete(json_headers)
+          end
         end
       end
 

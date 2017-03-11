@@ -10,6 +10,8 @@ module KnuVerse
         @server     = opts[:server] || 'https://cloud.knuverse.com'
         @apikey     = opts[:apikey]
         @secret     = opts[:secret]
+        @email      = opts[:email]
+        @password   = opts[:password]
         @base_uri   = opts[:base_uri] || '/api/v1/'
         @last_auth  = nil
         @auth_token = nil

@@ -3,8 +3,9 @@ module KnuVerse
     module Validations
       # APIClient validation methods
       module APIClient
-        def validate_creds(opts, exception)
-          raise(exception, 'Must Provide Auth') unless opts.key?(:apikey) && opts.key?(:secret)
+        def validate_creds(o, exception)
+          has_auth = (o.key?(:apikey) && o.key?(:secret)) || (o.key?(:email) && o.key?(:password))
+          raise(exception, 'Must Provide Auth') unless has_auth
         end
 
         # Validate the options passed on initialize
